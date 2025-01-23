@@ -1,5 +1,5 @@
-import React from 'react'
-const todos = [
+import React, { useState } from 'react'
+const SAMPLE_TODOS = [
   { id: 1, text: "Buy milk" },
   { id: 2, text: "Clean the house" },
   { id: 3, text: "Go for a run" },
@@ -14,12 +14,40 @@ const todos = [
 
 
 function TodoList() {
+  const [todos, setTodos] = useState(SAMPLE_TODOS);
+  const [todoText, setTodoText] = useState('123');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log('handleSubmit');
+
+    if(!todoText.trim()){
+      return;
+    }
+
+    // console.log("todoText :>> ", todoText, todoText.length);
+
+    setTodos([{id: crypto.randomUUID(), text: todoText}, ...todos]);
+
+    setTodoText('');
+  }
+
+  const handleChange = (e) => {
+    setTodoText(e.target.value)
+  }
   return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input type="text" value={todoText} onChange={handleChange} />
+        <button type='submit'>제출하기</button>
+        
+      </form>
     <ul>
-      {todos.map((todo) => (
-        <li key={todo.id}>{todo.text}</li>
+      {todos.map(({id, text}) => (
+        <li key={id}>{text}</li>
       ))}
     </ul>
+    </div>
   )
 }
 
