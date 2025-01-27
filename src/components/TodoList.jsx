@@ -38,13 +38,7 @@ function TodoList() {
 
   const handleToggleCompleted = (id) => {
     const updatedTodos = todos.map((todo) => {
-      if(todo.id === id){
-        return {
-          ...todo,
-          completed: !todo.completed,
-        }
-      }
-        return todo;
+      return todo.id === id ? {...todo, completed: !todo.completed} : todo;
     });
 
     setTodos(updatedTodos);
