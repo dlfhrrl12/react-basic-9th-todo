@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 const SAMPLE_TODOS = [
   { id: 1, text: "Buy milk" },
   { id: 2, text: "Clean the house" },
@@ -35,7 +35,32 @@ function TodoList() {
   const handleChange = (e) => {
     setTodoText(e.target.value)
   }
-
+  // ------------ delete ----------------
+  // const handleDelete = (id) => {
+  //   const filteredTodos = todos.filter((todo) => {
+  //     if(todo.id === id){
+  //       return false;
+  //     }
+      
+  //     return true;
+  //   });
+  //   setTodos(filteredTodos);
+  // }
+  // const handleDelete = (id) => {
+  //   setTodos((prev) => {
+  //      prev.filter((todo) => {
+  //       if(todo.id === id){
+  //         return false;
+  //       }
+  //       return true;
+  //     });
+  //   });
+  // }
+  const handleDelete = (id) => {
+    // todo.id가 내가 찾는 id와 같지 않을 때 true를 반환하여 그대로 남겨둠
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  }
+  //---------------------------------
   const handleToggleCompleted = (id) => {
     const updatedTodos = todos.map((todo) => {
       return todo.id === id ? {...todo, completed: !todo.completed} : todo;
@@ -58,9 +83,12 @@ function TodoList() {
               textDecoration: completed ? "line-through" : "none",
             }}
           >{text}</p>
+          <div>
           <button onClick={() => handleToggleCompleted(id)}>
             {completed ? "취소하기" : "완료하기"}
           </button>
+          <button onClick={() => handleDelete(id)}>삭제하기</button>
+          </div>
         </li>
       ))}
     </ul>
